@@ -25,21 +25,18 @@ android {
                 arguments += ["room.schemaLocation": "$projectDir/schemas".toString()]
             }
         }
+
+        Properties properties = new Properties()
+        properties.load(project.rootProject.file("local.properties").newDataInputStream())
+
+        buildConfigField("String", "API_KEY", "\"${properties.getProperty("API_KEY")}\"")
+        buildConfigField("String", "BASE_URL", "\"https://pro.openweathermap.org/\"")
     }
 
     buildTypes {
-
-        debug {
-            buildConfigField("String", "API_KEY", "\"d94cae1916920cf83c6ec33278878690\"")
-            buildConfigField("String", "BASE_URL", "\"https://pro.openweathermap.org/\"")
-        }
-
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-
-            buildConfigField("String", "API_KEY", "\"d94cae1916920cf83c6ec33278878690\"")
-            buildConfigField("String", "BASE_URL", "\"https://pro.openweathermap.org/\"")
         }
     }
     compileOptions {
