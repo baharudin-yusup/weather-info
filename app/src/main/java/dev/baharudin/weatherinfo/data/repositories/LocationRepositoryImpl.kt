@@ -24,11 +24,17 @@ class LocationRepositoryImpl @Inject constructor(
     }
 
     override suspend fun removeSavedLocation(location: Location) {
-        locationDao.delete(location.toDBEntity())
+        locationDao.delete(location.city, location.state, location.country)
+    }
+
+    override fun isLocationSaved(location: Location): Flow<Boolean> {
+        return locationDao.getSavedLocation(location.city, location.state, location.country).map {
+            it.isNotEmpty()
+        }
     }
 
     override fun getSavedLocation(): Flow<List<Location>> {
         return locationDao.getAllSavedLocation()
-            .map { dbEntities -> dbEntities.map { it.toEntity() } }
+            .map { dbEntities -> dbEntities.reversed().map { it.toEntity() } }
     }
 }

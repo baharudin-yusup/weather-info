@@ -13,7 +13,6 @@ data class GetCurrentConditionResponse(
     @SerializedName("main") val main: Main,//
     @SerializedName("visibility") val visibility: Int? = null,//
     @SerializedName("wind") val wind: Wind? = Wind(),//
-    @SerializedName("clouds") val clouds: Clouds? = Clouds(),//
     @SerializedName("dt") val dt: Long,//
     @SerializedName("sys") val sys: Sys,//
     @SerializedName("timezone") val timezone: Int? = null,

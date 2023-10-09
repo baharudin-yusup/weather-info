@@ -17,6 +17,7 @@ import dev.baharudin.weatherinfo.data.repositories.WeatherRepositoryImpl
 import dev.baharudin.weatherinfo.domain.repositories.LocationRepository
 import dev.baharudin.weatherinfo.domain.repositories.WeatherRepository
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
@@ -35,28 +36,39 @@ object AppModule {
             .fallbackToDestructiveMigration()
             .build()
 
-    @Singleton
     @Provides
+    @Singleton
     fun provideLocationDao(locationDatabase: LocationDatabase): LocationDao =
         locationDatabase.locationDao()
 
-    @Singleton
     @Provides
-    fun provideHttpClient(): OkHttpClient = OkHttpClient.Builder().readTimeout(15, TimeUnit.SECONDS)
-        .connectTimeout(15, TimeUnit.SECONDS).addInterceptor { chain ->
-            val url =
-                chain.request().url.newBuilder().addQueryParameter("appid", BuildConfig.API_KEY)
-                    .build()
-            val request = chain.request().newBuilder().url(url).build()
-            chain.proceed(request)
-        }.build()
+    @Singleton
+    fun provideHttpClient(): OkHttpClient {
+        val client = OkHttpClient.Builder().readTimeout(15, TimeUnit.SECONDS)
+            .connectTimeout(15, TimeUnit.SECONDS).addInterceptor { chain ->
+                val url =
+                    chain.request().url.newBuilder().addQueryParameter("appid", BuildConfig.API_KEY)
+                        .addQueryParameter("units", "metric").build()
+                val request = chain.request().newBuilder().url(url).build()
+                chain.proceed(request)
+            }
 
-    @Singleton
+        if (BuildConfig.DEBUG) {
+            val httpLoggingInterceptor = HttpLoggingInterceptor().apply {
+                level = HttpLoggingInterceptor.Level.BODY
+            }
+            client.addInterceptor(httpLoggingInterceptor)
+        }
+
+        return client.build()
+    }
+
     @Provides
+    @Singleton
     fun provideConverterFactory(): GsonConverterFactory = GsonConverterFactory.create()
 
-    @Singleton
     @Provides
+    @Singleton
     fun provideRetrofit(
         okHttpClient: OkHttpClient, gsonConverterFactory: GsonConverterFactory
     ): Retrofit = Retrofit.Builder().baseUrl(BuildConfig.BASE_URL).client(okHttpClient)

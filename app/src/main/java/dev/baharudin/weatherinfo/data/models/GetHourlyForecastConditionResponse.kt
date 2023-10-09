@@ -5,13 +5,13 @@ import dev.baharudin.weatherinfo.domain.entities.Condition
 
 
 data class GetHourlyForecastConditionResponse(
-    @SerializedName("cod") var cod: String? = null,
-    @SerializedName("message") var message: Int? = null,
-    @SerializedName("cnt") var cnt: Int? = null,
-    @SerializedName("list") var hourlyCondition: ArrayList<HourlyCondition> = arrayListOf(),
-    @SerializedName("city") var city: City
+    @SerializedName("cod") val cod: String? = null,
+    @SerializedName("message") val message: Float? = null,
+    @SerializedName("cnt") val cnt: Int? = null,
+    @SerializedName("list") val hourlyForecastCondition: ArrayList<HourlyForecastCondition> = arrayListOf(),
+    @SerializedName("city") val city: City
 ) {
-    fun getConditions() = hourlyCondition.map {
+    fun getConditions() = hourlyForecastCondition.map {
         Condition(
             date = it.getDate(),
             temperature = it.getTemperature(),

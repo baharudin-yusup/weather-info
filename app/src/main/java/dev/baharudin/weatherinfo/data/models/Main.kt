@@ -1,5 +1,6 @@
 package dev.baharudin.weatherinfo.data.models
 
+import android.util.Log
 import com.google.gson.annotations.SerializedName
 import dev.baharudin.weatherinfo.domain.entities.Temperature
 
@@ -11,5 +12,11 @@ data class Main(
     @SerializedName("pressure") val pressure: Int? = null,
     @SerializedName("humidity") val humidity: Int? = null
 ) {
-    fun toEntity() = Temperature(tempMin, temp, tempMax)
+    companion object {
+        private const val TAG = "Main"
+    }
+
+    fun toEntity(): Temperature {
+        return Temperature(tempMin, temp, tempMax)
+    }
 }
