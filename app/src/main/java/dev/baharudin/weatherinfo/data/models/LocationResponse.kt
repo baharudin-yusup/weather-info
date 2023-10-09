@@ -9,8 +9,8 @@ data class LocationResponse(
     @SerializedName("lat") val lat: Float,
     @SerializedName("lon") val lon: Float,
     @SerializedName("country") val country: String,
-    @SerializedName("state") val state: String = ""
+    @SerializedName("state") val state: String? = null
 ) {
     fun toEntity() =
-        Location(city = name, state = state, country = country, coordinate = Coordinate(lon, lat))
+        Location(city = name, state = state ?: "", country = country, coordinate = Coordinate(lon, lat))
 }

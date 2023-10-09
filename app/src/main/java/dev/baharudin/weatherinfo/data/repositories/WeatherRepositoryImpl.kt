@@ -9,16 +9,26 @@ import javax.inject.Inject
 class WeatherRepositoryImpl @Inject constructor(private val weatherApi: WeatherApi) :
     WeatherRepository {
     override suspend fun getCurrentCondition(location: Location): Condition {
-        val response = weatherApi.getCurrentCondition(location.getName())
+        val response = weatherApi.getCurrentCondition(
+            location.coordinate.latitude,
+            location.coordinate.longitude
+        )
         return response.getCondition()
     }
 
     override suspend fun getHourlyForecastCondition(location: Location): List<Condition> {
-        val response = weatherApi.getHourlyForecastCondition(location.getName())
+        val response = weatherApi.getHourlyForecastCondition(
+            location.coordinate.latitude,
+            location.coordinate.longitude
+        )
         return response.getConditions()
     }
 
     override suspend fun getDailyForecastCondition(location: Location): List<Condition> {
-        TODO("Not yet implemented")
+        val response = weatherApi.getDailyForecastCondition(
+            location.coordinate.latitude,
+            location.coordinate.longitude
+        )
+        return response.getConditions()
     }
 }

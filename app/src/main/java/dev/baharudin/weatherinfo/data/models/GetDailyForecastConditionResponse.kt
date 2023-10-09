@@ -3,15 +3,14 @@ package dev.baharudin.weatherinfo.data.models
 import com.google.gson.annotations.SerializedName
 import dev.baharudin.weatherinfo.domain.entities.Condition
 
-
-data class GetHourlyForecastConditionResponse(
+data class GetDailyForecastConditionResponse(
+    @SerializedName("city") val city: City,
     @SerializedName("cod") val cod: String? = null,
-    @SerializedName("message") val message: Float? = null,
+    @SerializedName("message") val message: Double? = null,
     @SerializedName("cnt") val cnt: Int? = null,
-    @SerializedName("list") val hourlyForecastCondition: ArrayList<HourlyForecastCondition> = arrayListOf(),
-    @SerializedName("city") val city: City
+    @SerializedName("list") val dailyForecastCondition: ArrayList<DailyForecastCondition> = arrayListOf()
 ) {
-    fun getConditions() = hourlyForecastCondition.map {
+    fun getConditions() = dailyForecastCondition.map {
         Condition(
             date = it.getDate(),
             temperature = it.getTemperature(),
