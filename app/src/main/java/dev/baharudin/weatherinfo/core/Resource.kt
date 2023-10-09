@@ -1,4 +1,4 @@
-package dev.baharudin.weatherinfo.common
+package dev.baharudin.weatherinfo.core
 
 sealed class Resource<T> {
     class Success<T>(val data: T, val message: String = "") : Resource<T>()

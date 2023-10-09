@@ -1,4 +1,4 @@
-package dev.baharudin.weatherinfo.data.data_sources.api
+package dev.baharudin.weatherinfo.data.sources.api
 
 import dev.baharudin.weatherinfo.data.models.GetCurrentConditionResponse
 import dev.baharudin.weatherinfo.data.models.GetDailyForecastConditionResponse

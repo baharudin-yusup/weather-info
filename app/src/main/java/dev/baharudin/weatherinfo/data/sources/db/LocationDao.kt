@@ -1,12 +1,10 @@
-package dev.baharudin.weatherinfo.data.data_sources.db
+package dev.baharudin.weatherinfo.data.sources.db
 
 import androidx.room.Dao
-import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import dev.baharudin.weatherinfo.data.data_sources.db.models.LocationDBEntity
-import dev.baharudin.weatherinfo.data.models.City
+import dev.baharudin.weatherinfo.data.sources.db.models.LocationDBEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao

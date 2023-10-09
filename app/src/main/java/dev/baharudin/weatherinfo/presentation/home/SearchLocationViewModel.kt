@@ -5,8 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dev.baharudin.weatherinfo.common.DataState
-import dev.baharudin.weatherinfo.common.Resource
+import dev.baharudin.weatherinfo.presentation.common.DataState
+import dev.baharudin.weatherinfo.core.Resource
 import dev.baharudin.weatherinfo.domain.entities.Location
 import dev.baharudin.weatherinfo.domain.usecases.location.SearchLocation
 import kotlinx.coroutines.FlowPreview

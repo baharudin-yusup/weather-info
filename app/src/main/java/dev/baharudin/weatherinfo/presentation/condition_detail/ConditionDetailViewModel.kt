@@ -9,8 +9,8 @@ import androidx.lifecycle.viewModelScope
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
-import dev.baharudin.weatherinfo.common.DataState
-import dev.baharudin.weatherinfo.common.Resource
+import dev.baharudin.weatherinfo.presentation.common.DataState
+import dev.baharudin.weatherinfo.core.Resource
 import dev.baharudin.weatherinfo.domain.entities.Condition
 import dev.baharudin.weatherinfo.domain.usecases.condition.GetCurrentCondition
 import dev.baharudin.weatherinfo.domain.usecases.condition.GetDailyForecastCondition

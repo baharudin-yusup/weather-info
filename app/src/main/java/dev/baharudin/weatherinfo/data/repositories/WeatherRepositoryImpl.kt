@@ -1,6 +1,6 @@
 package dev.baharudin.weatherinfo.data.repositories
 
-import dev.baharudin.weatherinfo.data.data_sources.api.WeatherApi
+import dev.baharudin.weatherinfo.data.sources.api.WeatherApi
 import dev.baharudin.weatherinfo.domain.entities.Condition
 import dev.baharudin.weatherinfo.domain.entities.Location
 import dev.baharudin.weatherinfo.domain.repositories.WeatherRepository

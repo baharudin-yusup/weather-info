@@ -8,10 +8,11 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import dev.baharudin.weatherinfo.BuildConfig
-import dev.baharudin.weatherinfo.data.data_sources.api.LocationApi
-import dev.baharudin.weatherinfo.data.data_sources.api.WeatherApi
-import dev.baharudin.weatherinfo.data.data_sources.db.LocationDao
-import dev.baharudin.weatherinfo.data.data_sources.db.LocationDatabase
+import dev.baharudin.weatherinfo.data.const.ApiConstant
+import dev.baharudin.weatherinfo.data.sources.api.LocationApi
+import dev.baharudin.weatherinfo.data.sources.api.WeatherApi
+import dev.baharudin.weatherinfo.data.sources.db.LocationDao
+import dev.baharudin.weatherinfo.data.sources.db.LocationDatabase
 import dev.baharudin.weatherinfo.data.repositories.LocationRepositoryImpl
 import dev.baharudin.weatherinfo.data.repositories.WeatherRepositoryImpl
 import dev.baharudin.weatherinfo.domain.repositories.LocationRepository
@@ -47,8 +48,9 @@ object AppModule {
         val client = OkHttpClient.Builder().readTimeout(15, TimeUnit.SECONDS)
             .connectTimeout(15, TimeUnit.SECONDS).addInterceptor { chain ->
                 val url =
-                    chain.request().url.newBuilder().addQueryParameter("appid", BuildConfig.API_KEY)
-                        .addQueryParameter("units", "metric").build()
+                    chain.request().url.newBuilder()
+                        .addQueryParameter(ApiConstant.AUTH_PARAM, BuildConfig.API_KEY)
+                        .addQueryParameter(ApiConstant.UNIT_PARAM, "metric").build()
                 val request = chain.request().newBuilder().url(url).build()
                 chain.proceed(request)
             }

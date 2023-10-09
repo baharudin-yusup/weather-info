@@ -105,7 +105,7 @@ class ConditionDetailFragment : Fragment() {
                 ).displayCountry else "$countryState, ${Locale("", country).displayCountry}"
 
                 binding.appbar.subtitle = subtitle
-                Glide.with(this).load(state.data.getWeatherIconUrl(true))
+                Glide.with(this).load(state.data.getWeatherIconUrl())
                     .into(
                         object : CustomTarget<Drawable>(120, 120) {
                             override fun onLoadCleared(placeholder: Drawable?) {

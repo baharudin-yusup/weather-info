@@ -1,4 +1,4 @@
-package dev.baharudin.weatherinfo.common
+package dev.baharudin.weatherinfo.presentation.common
 
 data class DataState<T> (
     val data: T? = null,

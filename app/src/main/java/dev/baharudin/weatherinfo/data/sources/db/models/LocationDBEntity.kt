@@ -1,4 +1,4 @@
-package dev.baharudin.weatherinfo.data.data_sources.db.models
+package dev.baharudin.weatherinfo.data.sources.db.models
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

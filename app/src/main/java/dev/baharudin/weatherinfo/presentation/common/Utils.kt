@@ -1,12 +1,13 @@
 package dev.baharudin.weatherinfo.presentation.common
 
+import dev.baharudin.weatherinfo.data.const.ApiConstant
 import dev.baharudin.weatherinfo.domain.entities.Condition
 
 
-fun Condition.getWeatherIconUrl(bigSize: Boolean = false): String? {
+fun Condition.getWeatherIconUrl(): String? {
     return if (this.weathers.isNullOrEmpty()) {
         null
     } else {
-        "https://openweathermap.org/img/wn/${this.weathers.first().icon}@${if (bigSize) "4" else "2"}x.png"
+        "${ApiConstant.WEATHER_ICON_BASE_URL}${this.weathers.first().icon}@4x.png"
     }
 }
