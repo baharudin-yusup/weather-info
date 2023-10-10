@@ -29,6 +29,7 @@ class SearchLocationViewModel @Inject constructor(
     }
 
     private val _searchQuery = MutableStateFlow("")
+    private val _showToast = MutableLiveData(false)
 
     private val _searchLocationState = MutableLiveData(DataState<ArrayList<Location>>())
     val state: LiveData<DataState<ArrayList<Location>>> = _searchLocationState
@@ -48,7 +49,8 @@ class SearchLocationViewModel @Inject constructor(
 
                         is Resource.Success -> {
                             val message: String =
-                                if (resource.data.isEmpty()) "The location you were looking for was not found" else ""
+                                if (resource.data.isEmpty() && _showToast.value != false)
+                                    "The location you were looking for was not found" else ""
 
                             _searchLocationState.value = DataState(
                                 data = filterDuplicateCityInCountry(resource.data),
@@ -61,8 +63,9 @@ class SearchLocationViewModel @Inject constructor(
         }.launchIn(viewModelScope)
     }
 
-    fun search(name: String) {
+    fun search(name: String, shouldShowToast: Boolean = false) {
         _searchQuery.value = name
+        _showToast.value = shouldShowToast
     }
 
     private fun filterDuplicateCityInCountry(locations: List<Location>): ArrayList<Location> {
@@ -80,4 +83,6 @@ class SearchLocationViewModel @Inject constructor(
 
         return output
     }
+
+    fun shouldShowToast() = _showToast.value ?: false
 }

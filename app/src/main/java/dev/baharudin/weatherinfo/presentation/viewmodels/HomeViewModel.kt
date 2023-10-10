@@ -67,7 +67,7 @@ class HomeViewModel @Inject constructor(
             return
         }
 
-        if (_savedConditionList.value == null || _savedConditionList.value!!.data.isNullOrEmpty()) {
+        if (_savedConditionList.value == null || _savedConditionList.value?.data.isNullOrEmpty()) {
             val conditions = locationList.map { Condition(location = it) }
             _savedConditionList.value = DataState(data = ArrayList(conditions))
             updateCurrentCondition(
@@ -78,12 +78,12 @@ class HomeViewModel @Inject constructor(
         val savedConditionSize = _savedConditionList.value?.data?.size ?: 0
         val savedLocationSize = _savedLocationList.value?.size ?: 0
 
-        val newCondition =
-            if (savedConditionSize == 0) DataState(data = arrayListOf()) else _savedConditionList.value!!
-        var i = 0
 
         // User add new location
         if (savedLocationSize > savedConditionSize) {
+            val newCondition =
+                if (savedConditionSize == 0) DataState(data = arrayListOf()) else _savedConditionList.value!!
+            var i = 0
             while (i < savedLocationSize) {
                 val savedLocation = locationList[i]
                 val fetchedCondition = newCondition.data!![i]
@@ -93,21 +93,16 @@ class HomeViewModel @Inject constructor(
                 }
                 i++
             }
+            _savedConditionList.value = newCondition
         }
         // User remove some location
         else if (savedLocationSize < savedConditionSize) {
-            while (i < savedLocationSize) {
-                val savedLocation = locationList[i]
-                val fetchedCondition = newCondition.data!![i]
-                if (savedLocation.getName() != fetchedCondition.location.getName()) {
-                    newCondition.data.removeAt(i)
-                } else {
-                    i++
-                }
-            }
+            val savedLocationName = locationList.map { it.getName() }
+            val savedConditions = _savedConditionList.value?.data
+            savedConditions?.removeAll { !savedLocationName.contains(it.location.getName()) }
+            _savedConditionList.value = DataState(data = savedConditions)
         }
 
-        _savedConditionList.value = newCondition
     }
 
     private fun updateCurrentCondition(vararg locations: Location) {

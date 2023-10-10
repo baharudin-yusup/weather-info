@@ -95,6 +95,9 @@ class HomeFragment : Fragment() {
 
         homeViewModel.savedConditionList.observe(viewLifecycleOwner) { state ->
             showSavedLocationList(state.data)
+
+            binding.tvNoSavedLocation.visibility =
+                if (state.data != null && state.data.isEmpty()) View.VISIBLE else View.GONE
         }
     }
 
@@ -120,7 +123,7 @@ class HomeFragment : Fragment() {
 
             searchView.editText.setOnEditorActionListener { textView, i, keyEvent ->
                 if (i == EditorInfo.IME_ACTION_SEARCH || (keyEvent.keyCode == KeyEvent.KEYCODE_ENTER && keyEvent.action == KeyEvent.ACTION_DOWN)) {
-                    searchLocationViewModel.search(textView.text.toString())
+                    searchLocationViewModel.search(textView.text.toString(), true)
                     true
                 } else {
                     false
@@ -143,9 +146,11 @@ class HomeFragment : Fragment() {
                 showSearchLocationList(state.data)
             }
 
-            if (state.message.isNotBlank()) {
+            if (state.message.isNotBlank() && searchLocationViewModel.shouldShowToast()) {
                 Toast.makeText(requireActivity(), state.message, Toast.LENGTH_SHORT).show()
             }
+
+            binding.pbSearchLocation.visibility = if (state.isLoading) View.VISIBLE else View.GONE
         }
     }
 

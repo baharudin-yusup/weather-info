@@ -17,7 +17,7 @@ data class GetCurrentConditionResponse(
     @SerializedName("sys") val sys: Sys,//
     @SerializedName("timezone") val timezone: Int? = null,
     @SerializedName("id") val id: Int? = null,
-    @SerializedName("name") val name: String,
+    @SerializedName("name") val name: String = "",
     @SerializedName("cod") val cod: Int? = null
 ) {
     private fun getDate(): Date = Date.from(Instant.ofEpochMilli(dt))
