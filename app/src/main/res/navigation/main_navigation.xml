@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="dev.baharudin.weatherinfo.presentation.home.HomeFragment"
+        android:name="dev.baharudin.weatherinfo.presentation.views.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" >
         <action
@@ -20,7 +20,7 @@
     </fragment>
     <fragment
         android:id="@+id/conditionDetailFragment"
-        android:name="dev.baharudin.weatherinfo.presentation.condition_detail.ConditionDetailFragment"
+        android:name="dev.baharudin.weatherinfo.presentation.views.ConditionDetailFragment"
         android:label="fragment_condition_detail"
         tools:layout="@layout/fragment_condition_detail" >
         <argument

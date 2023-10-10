@@ -1,6 +1,6 @@
 package dev.baharudin.weatherinfo.data.sources.api
 
-import dev.baharudin.weatherinfo.data.models.LocationResponse
+import dev.baharudin.weatherinfo.data.sources.api.models.LocationResponse
 import retrofit2.http.GET
 import retrofit2.http.Query
 

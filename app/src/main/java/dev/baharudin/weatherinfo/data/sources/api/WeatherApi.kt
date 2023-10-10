@@ -1,8 +1,8 @@
 package dev.baharudin.weatherinfo.data.sources.api
 
-import dev.baharudin.weatherinfo.data.models.GetCurrentConditionResponse
-import dev.baharudin.weatherinfo.data.models.GetDailyForecastConditionResponse
-import dev.baharudin.weatherinfo.data.models.GetHourlyForecastConditionResponse
+import dev.baharudin.weatherinfo.data.sources.api.models.GetCurrentConditionResponse
+import dev.baharudin.weatherinfo.data.sources.api.models.GetDailyForecastConditionResponse
+import dev.baharudin.weatherinfo.data.sources.api.models.GetHourlyForecastConditionResponse
 import retrofit2.http.GET
 import retrofit2.http.Query
 

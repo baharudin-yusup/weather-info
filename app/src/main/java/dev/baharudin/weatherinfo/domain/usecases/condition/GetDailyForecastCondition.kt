@@ -1,6 +1,6 @@
 package dev.baharudin.weatherinfo.domain.usecases.condition
 
-import dev.baharudin.weatherinfo.core.Resource
+import dev.baharudin.weatherinfo.domain.entities.Resource
 import dev.baharudin.weatherinfo.domain.entities.Condition
 import dev.baharudin.weatherinfo.domain.entities.Location
 import dev.baharudin.weatherinfo.domain.repositories.WeatherRepository
