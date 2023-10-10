@@ -1,9 +1,11 @@
 package dev.baharudin.weatherinfo.presentation.views
 
 import android.os.Bundle
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
@@ -19,10 +21,10 @@ import dev.baharudin.weatherinfo.R
 import dev.baharudin.weatherinfo.databinding.FragmentHomeBinding
 import dev.baharudin.weatherinfo.domain.entities.Condition
 import dev.baharudin.weatherinfo.domain.entities.Location
-import dev.baharudin.weatherinfo.presentation.views.adapter.SavedLocationAdapter
-import dev.baharudin.weatherinfo.presentation.views.adapter.SearchLocationAdapter
 import dev.baharudin.weatherinfo.presentation.viewmodels.HomeViewModel
 import dev.baharudin.weatherinfo.presentation.viewmodels.SearchLocationViewModel
+import dev.baharudin.weatherinfo.presentation.views.adapter.SavedLocationAdapter
+import dev.baharudin.weatherinfo.presentation.views.adapter.SearchLocationAdapter
 
 
 @AndroidEntryPoint
@@ -43,7 +45,11 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
+        modifyOnBackPressed()
+        return binding.root
+    }
 
+    private fun modifyOnBackPressed() {
         val activity = activity as AppCompatActivity?
 
         requireActivity().onBackPressedDispatcher.addCallback(
@@ -59,28 +65,18 @@ class HomeFragment : Fragment() {
                     activity?.finish()
                 }
             })
-        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupUi()
 
-        searchLocationViewModel.state.observe(viewLifecycleOwner) { state ->
-            if (state.data != null) {
-                showSearchLocationList(state.data)
-            }
-
-            if (state.message.isNotBlank()) {
-                Toast.makeText(requireActivity(), state.message, Toast.LENGTH_SHORT).show()
-            }
-        }
     }
 
     private fun setupUi() {
-        setupAppBar()
+        setupAppBarUi()
         setupSavedLocationUi()
-        setupSearchView()
+        setupSearchLocationUi()
     }
 
     private fun setupSavedLocationUi() {
@@ -102,7 +98,7 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun setupAppBar() {
+    private fun setupAppBarUi() {
         with(binding) {
             topAppbar.setOnMenuItemClickListener { menuItem ->
                 when (menuItem.itemId) {
@@ -115,13 +111,21 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun setupSearchView() {
+    private fun setupSearchLocationUi() {
         with(binding) {
             searchView.editText.addTextChangedListener {
                 if (it != null)
                     searchLocationViewModel.search(it.toString())
             }
 
+            searchView.editText.setOnEditorActionListener { textView, i, keyEvent ->
+                if (i == EditorInfo.IME_ACTION_SEARCH || (keyEvent.keyCode == KeyEvent.KEYCODE_ENTER && keyEvent.action == KeyEvent.ACTION_DOWN)) {
+                    searchLocationViewModel.search(textView.text.toString())
+                    true
+                } else {
+                    false
+                }
+            }
             rvSearchLocation.setHasFixedSize(true)
             val layoutManager = LinearLayoutManager(requireContext())
             rvSearchLocation.layoutManager = layoutManager
@@ -132,6 +136,16 @@ class HomeFragment : Fragment() {
                 )
             )
             showSearchLocationList()
+        }
+
+        searchLocationViewModel.state.observe(viewLifecycleOwner) { state ->
+            if (state.data != null) {
+                showSearchLocationList(state.data)
+            }
+
+            if (state.message.isNotBlank()) {
+                Toast.makeText(requireActivity(), state.message, Toast.LENGTH_SHORT).show()
+            }
         }
     }
 

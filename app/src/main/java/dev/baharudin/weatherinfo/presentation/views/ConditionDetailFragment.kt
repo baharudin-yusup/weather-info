@@ -185,7 +185,6 @@ class ConditionDetailFragment : Fragment() {
 
 
     private fun showHourlyForecastConditionList(conditions: ArrayList<Condition> = arrayListOf()) {
-        Log.d(TAG, "showHourlyForecastConditionList: ${conditions.size}")
         val adapter =
             HourlyForecastConditionAdapter(requireContext(), conditions)
         binding.rvHourlyForecast.adapter = adapter

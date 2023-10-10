@@ -61,6 +61,12 @@ class HomeViewModel @Inject constructor(
 
     private fun mapLocationToCondition(locationList: List<Location>) {
         _savedLocationList.value = locationList
+
+        if (_savedLocationList.value.isNullOrEmpty()) {
+            _savedConditionList.value = DataState(data = arrayListOf())
+            return
+        }
+
         if (_savedConditionList.value == null || _savedConditionList.value!!.data.isNullOrEmpty()) {
             val conditions = locationList.map { Condition(location = it) }
             _savedConditionList.value = DataState(data = ArrayList(conditions))

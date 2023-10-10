@@ -5,10 +5,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dev.baharudin.weatherinfo.presentation.common.DataState
-import dev.baharudin.weatherinfo.domain.entities.Resource
 import dev.baharudin.weatherinfo.domain.entities.Location
+import dev.baharudin.weatherinfo.domain.entities.Resource
 import dev.baharudin.weatherinfo.domain.usecases.location.SearchLocation
+import dev.baharudin.weatherinfo.presentation.common.DataState
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.debounce
@@ -46,9 +46,15 @@ class SearchLocationViewModel @Inject constructor(
                         is Resource.Loading -> _searchLocationState.value =
                             _searchLocationState.value?.copy(isLoading = true, message = "")
 
-                        is Resource.Success -> _searchLocationState.value = DataState(
-                            data = filterDuplicateCityInCountry(resource.data),
-                        )
+                        is Resource.Success -> {
+                            val message: String =
+                                if (resource.data.isEmpty()) "The location you were looking for was not found" else ""
+
+                            _searchLocationState.value = DataState(
+                                data = filterDuplicateCityInCountry(resource.data),
+                                message = message
+                            )
+                        }
                     }
                 }.launchIn(viewModelScope)
             }
