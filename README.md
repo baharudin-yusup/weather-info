@@ -1,6 +1,6 @@
 # Weather Info App
 
-This is a simple weather application that provides current weather conditions and up to 4 days of weather forecast for multiple cities. The application utilizes the OpenWeatherMap API to fetch weather data.
+This is a simple weather application that provides current weather conditions and up to 4 days of weather forecast for multiple cities. The application utilizes the OpenWeather API to fetch weather data.
 
 ## Project Specifications
 
