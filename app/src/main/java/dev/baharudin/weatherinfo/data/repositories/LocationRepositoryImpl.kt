@@ -1,8 +1,8 @@
 package dev.baharudin.weatherinfo.data.repositories
 
-import dev.baharudin.weatherinfo.data.data_sources.api.LocationApi
-import dev.baharudin.weatherinfo.data.data_sources.db.LocationDao
-import dev.baharudin.weatherinfo.data.data_sources.db.models.toDBEntity
+import dev.baharudin.weatherinfo.data.sources.api.LocationApi
+import dev.baharudin.weatherinfo.data.sources.db.LocationDao
+import dev.baharudin.weatherinfo.data.sources.db.toDBEntity
 import dev.baharudin.weatherinfo.domain.entities.Location
 import dev.baharudin.weatherinfo.domain.repositories.LocationRepository
 import kotlinx.coroutines.flow.Flow
@@ -24,11 +24,17 @@ class LocationRepositoryImpl @Inject constructor(
     }
 
     override suspend fun removeSavedLocation(location: Location) {
-        locationDao.delete(location.toDBEntity())
+        locationDao.delete(location.city, location.state, location.country)
+    }
+
+    override fun isLocationSaved(location: Location): Flow<Boolean> {
+        return locationDao.getSavedLocation(location.city, location.state, location.country).map {
+            it.isNotEmpty()
+        }
     }
 
     override fun getSavedLocation(): Flow<List<Location>> {
         return locationDao.getAllSavedLocation()
-            .map { dbEntities -> dbEntities.map { it.toEntity() } }
+            .map { dbEntities -> dbEntities.reversed().map { it.toEntity() } }
     }
 }

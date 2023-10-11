@@ -1,3 +1,15 @@
 <resources>
     <string name="app_name">Weather Info</string>
+    <string name="searchbar_hint">Search locations</string>
+    <string name="add_location">Add Location</string>
+    <string name="current_weather_icon">Current weather icon</string>
+    <string name="temperature">%1$.0f°C</string>
+    <string name="hourly">HOURLY</string>
+    <string name="this_week">THIS WEEK</string>
+    <string name="question_mark">\?</string>
+    <string name="weather_icon">Weather icon</string>
+    <string name="min">min</string>
+    <string name="max">max</string>
+    <string name="bookmark">Bookmark</string>
+    <string name="no_location_saved">No location saved</string>
 </resources>
